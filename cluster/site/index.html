@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Shop</title>
+<style>
+  :root { --c: #64748b; }
+  body { margin: 0; font-family: system-ui, sans-serif; background: color-mix(in srgb, var(--c) 10%, white); color: #1e293b; min-height: 100vh; }
+  header { background: var(--c); color: #fff; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; }
+  header b { font-size: 18px; }
+  .tag { background: #fff; color: var(--c); border-radius: 99px; padding: 1px 10px; font: 700 12px sans-serif; }
+  main { padding: 14px; }
+  h1 { font-size: 22px; margin: 0 0 8px; color: var(--c); }
+  .live { margin-top: 14px; background: #fff; border: 1px solid color-mix(in srgb, var(--c) 40%, white); border-radius: 8px; padding: 10px; font-size: 13px; }
+  .live h2 { margin: 0 0 6px; font-size: 12px; text-transform: uppercase; letter-spacing: .6px; color: var(--c); display: flex; justify-content: space-between; }
+  #ticker { font-size: 15px; min-height: 22px; transition: opacity .2s; }
+  .nums { margin-top: 8px; color: #64748b; } .nums b { color: var(--c); font-size: 18px; }
+  dl { display: grid; grid-template-columns: auto 1fr; gap: 3px 10px; font-size: 12px; margin: 14px 0 0; }
+  dt { color: #64748b; } dd { margin: 0; word-break: break-word; }
+  code { background: rgba(0,0,0,.06); padding: 0 4px; border-radius: 3px; }
+  .st { margin-top: 10px; font-size: 12px; color: #64748b; }
+</style>
+</head>
+<body>
+<header><b id="title">Shop</b><span class="tag" id="version">…</span></header>
+<main>
+  <h1 id="greeting">…</h1>
+  <div id="desc"></div>
+  <div class="live">
+    <h2><span id="dyn-title"></span><span id="clock"></span></h2>
+    <div id="ticker"></div>
+    <div class="nums"><span data-i="orders"></span> <b id="counter">0</b></div>
+  </div>
+  <dl>
+    <dt data-i="strategy"></dt><dd id="strategy"></dd>
+    <dt data-i="header"></dt><dd id="beta"></dd>
+    <dt data-i="pod"></dt><dd><code id="pod"></code></dd>
+    <dt data-i="node"></dt><dd><code id="node"></code></dd>
+    <dt data-i="why"></dt><dd id="reason"></dd>
+  </dl>
+  <div class="st" id="status" data-i="loading"></div>
+</main>
+<script src="common.js"></script>
+</body>
+</html>

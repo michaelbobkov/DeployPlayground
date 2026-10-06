@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: platform
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels: { app: platform }
+  template:
+    metadata:
+      labels: { app: platform }
+    spec:
+      serviceAccountName: platform
+      terminationGracePeriodSeconds: 2
+      containers:
+        - name: platform
+          image: node:22-alpine
+          imagePullPolicy: IfNotPresent
+          command: ["node", "/code/server.js"]
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NAMESPACE
+              valueFrom: { fieldRef: { fieldPath: metadata.namespace } }
+          readinessProbe:
+            httpGet: { path: /healthz, port: 3000 }
+            periodSeconds: 2
+          resources:
+            requests: { cpu: 20m, memory: 48Mi }
+          volumeMounts:
+            - { name: code, mountPath: /code, readOnly: true }
+      volumes:
+        - name: code
+          configMap: { name: platform-code }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: platform
+spec:
+  selector: { app: platform }
+  ports:
+    - port: 80
+      targetPort: 3000
